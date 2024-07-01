@@ -1,4 +1,4 @@
-package com.waa.project.contracts;
+package com.waa.project.security.contract;
 
 import lombok.Data;
 
