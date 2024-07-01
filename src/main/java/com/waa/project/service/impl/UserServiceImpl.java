@@ -3,7 +3,7 @@ package com.waa.project.service.impl;
 import com.waa.project.entity.User;
 import com.waa.project.exception.ResourceNotFoundException;
 import com.waa.project.repository.UserRepository;
-import com.waa.project.security.contracts.AuthUserResponse;
+import com.waa.project.security.contract.AuthUserResponse;
 import com.waa.project.service.UserService;
 import com.waa.project.util.UserErrorMessages;
 import org.modelmapper.ModelMapper;
