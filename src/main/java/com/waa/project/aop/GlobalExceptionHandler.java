@@ -4,7 +4,7 @@ package com.waa.project.aop;
 import com.waa.project.exception.ResourceAlreadyExistsException;
 import com.waa.project.exception.ResourceAlreadyInUseException;
 import com.waa.project.exception.ResourceNotFoundException;
-import com.waa.project.security.contracts.ErrorResponse;
+import com.waa.project.security.contract.ErrorResponse;
 import com.waa.project.security.exception.InvalidCurrentPasswordException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
