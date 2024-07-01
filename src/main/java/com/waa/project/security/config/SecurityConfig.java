@@ -1,11 +1,11 @@
 package com.waa.project.security.config;
 
+import com.waa.project.enums.RoleType;
 import com.waa.project.security.filter.JwtTokenFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,9 +27,12 @@ public class SecurityConfig {
                    .sessionManagement(
                            sessionMgr -> sessionMgr.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                    .authorizeHttpRequests(
-                           authorizeRequests ->
-                                   authorizeRequests.requestMatchers("/protected/**").authenticated()
-                                                    .anyRequest().permitAll()
+                           authorizeRequests -> authorizeRequests.requestMatchers("/api/v1/admins/**")
+                                                                 .hasRole(RoleType.ADMIN.name())
+                                                                 .requestMatchers("/api/v1/students/**")
+                                                                 .hasRole(RoleType.STUDENT.name())
+                                                                 .anyRequest()
+                                                                 .permitAll()
                                          )
                    .exceptionHandling(
                            exceptionHandler -> exceptionHandler.authenticationEntryPoint(
@@ -38,7 +41,6 @@ public class SecurityConfig {
                                                                                         )
                                      )
                    .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
-                   .httpBasic(Customizer.withDefaults())
                    .build();
     }
 
