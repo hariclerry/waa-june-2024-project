@@ -21,7 +21,7 @@ public class EventController {
         return eventService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/admins/{id}")
     public EventDTO getEvent(@PathVariable Long id) {
         return eventService.findById(id);
     }
@@ -31,22 +31,22 @@ public class EventController {
         return eventService.save(eventDTO);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/admins/{id}")
     public EventDTO updateEvent(@PathVariable Long id, @RequestBody EventDTO eventDTO) {
         return eventService.update(eventDTO, id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admins/{id}")
     public void deleteEvent(@PathVariable Long id) {
         eventService.deleteById(id);
     }
 
-    @PostMapping("/{eventId}/attendees/{studentId}")
+    @PostMapping("/students/{eventId}/attendees/{studentId}")
     public EventDTO addAttendee(@PathVariable Long eventId, @PathVariable Long studentId) {
         return eventService.addEventAttendee(eventId, studentId);
     }
 
-    @DeleteMapping("/{eventId}/attendees/{studentId}")
+    @DeleteMapping("/students/{eventId}/attendees/{studentId}")
     public void removeAttendee(@PathVariable Long eventId, @PathVariable Long studentId) {
          eventService.removeEventAttendee(eventId, studentId);
     }
