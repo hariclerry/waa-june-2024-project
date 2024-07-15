@@ -25,8 +25,10 @@ const setAccessToken = accessToken => {
 apiClient.interceptors.request.use(
   config => {
     const token = getAccessToken();
-    if (token) {
+    if (token !== '' && token != null && token.length > 0) {
       config.headers['Authorization'] = `Bearer ${token}`;
+    } else {
+      config.headers['Authorization'] = null;
     }
     return config;
   },
@@ -39,22 +41,33 @@ apiClient.interceptors.response.use(
   async error => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    const refreshToken = getRefreshToken();
+
+    if (refreshToken === '' || refreshToken === null) {
       originalRequest._retry = true;
+    }
 
-      try {
-        const refreshToken = getRefreshToken();
-        const response = await apiClient.post('/auth/token/refresh', {refreshToken: refreshToken});
+    if (error.response.status === 401) {
+      if (!originalRequest._retry) {
+        originalRequest._retry = true;
 
-        if (response.status === 200) {
-          const newToken = response.data.accessToken;
-          setAccessToken(newToken);
-          originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
+        try {
+          const response = await apiClient.post('/auth/token/refresh', {refreshToken: refreshToken});
 
-          return apiClient(originalRequest);
+          if (response.status === 200) {
+            const newToken = response.data.accessToken;
+            setAccessToken(newToken);
+            originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
+
+            return apiClient(originalRequest);
+          }
+        } catch (refreshError) {
+          setTokens();
+
+          return Promise.reject(refreshError);
         }
-      } catch (refreshError) {
-        return Promise.reject(refreshError);
+      } else {
+        setTokens();
       }
     }
 
