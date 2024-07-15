@@ -4,6 +4,7 @@ import {Route, Routes} from 'react-router';
 import Login from './features/authentication/login/Login';
 import Register from './features/authentication/register/Register';
 import Students from './features/students/Students';
+import StudentDetail from './features/students/student-detail';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/students" element={<Students />} />
+      <Route path="/student/:username" element={<StudentDetail />} />
     </Routes>
   );
 }
