@@ -65,9 +65,6 @@ const AcademicRes = () => {
 
   const handleAcademicResSave = async event => {
     event.preventDefault();
-
-    console.log(editMode);
-
     try {
       if (editMode == "Edit") {
         await updateApi(academicResForm);

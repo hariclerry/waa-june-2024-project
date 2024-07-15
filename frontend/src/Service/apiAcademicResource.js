@@ -15,7 +15,7 @@ export const getAllCategoriesApi = async () => {
   return response.data;
 };
 
-export const saveApi = async data => {
+export const saveApi = async dataForm => {
   const formData = new FormData();
 
   formData.append(
@@ -23,20 +23,18 @@ export const saveApi = async data => {
     new Blob(
       [
         JSON.stringify({
-          name: data.name,
-          body: data.body,
-          resourceId: data.resourceCategory
+          name: dataForm.name,
+          body: dataForm.body,
+          resourceId: dataForm.resourceCategory
         })
       ],
       {type: "application/json"}
     )
   );
 
-  if (data.file) {
-    formData.append("file", data.file);
+  if (dataForm.file) {
+    formData.append("file", dataForm.file);
   }
-
-  console.log("save()==" + formData);
 
   // Ensure no conflicting headers are set
   const response = await axios.post("/academic", formData, {
@@ -48,29 +46,28 @@ export const saveApi = async data => {
   return response.data;
 };
 
-export const updateApi = async data => {
+export const updateApi = async dataForm => {
   const formData = new FormData();
-
   formData.append(
     "formdata",
     new Blob(
       [
         JSON.stringify({
-          name: data.name,
-          body: data.body,
-          resourceId: data.resourceCategory
+          id: dataForm.id,
+          name: dataForm.name,
+          body: dataForm.body,
+          resourceId: dataForm.resourceCategory
         })
       ],
       {type: "application/json"}
     )
   );
 
-  if (data.file) {
-    formData.append("file", data.file);
+  if (dataForm.file) {
+    formData.append("file", dataForm.file);
   }
 
-  console.log("update()==" + formData);
-  const response = await axios.put("/academic/" + data.id, formData, {
+  const response = await axios.put("/academic/" + dataForm.id, formData, {
     headers: {
       "Content-Type": "multipart/form-data"
     }

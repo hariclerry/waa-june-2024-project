@@ -17,7 +17,9 @@ const AcademicResList = ({
         setAcademicForm({
           id: result.id,
           name: result.name,
-          body: result.body
+          body: result.body,
+          resourceCategory: result.resourceType ? result.resourceType.id : "",
+          file: null
         });
         openModal("Edit");
       }
