@@ -11,9 +11,11 @@ import {getTokens} from '../../core/setup/token';
 
 export default function StudentDetail() {
   const location = useLocation();
-  const {username} = useParams();
+  var {username} = useParams();
   const navigate = useNavigate();
   const profile = getCurrentProfile();
+
+  username = username || profile.user;
 
   const [student, setStudent] = useState(null);
   const [deleteState, setDeleteState] = useState({
