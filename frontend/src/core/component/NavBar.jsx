@@ -4,7 +4,7 @@ export default function NavBar() {
   return (
     <Navbar expand="lg" className="bg-primary">
       <Container>
-        <Navbar.Brand href="#home" className="text-white">
+        <Navbar.Brand href="/" className="text-white">
           University Connect
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
