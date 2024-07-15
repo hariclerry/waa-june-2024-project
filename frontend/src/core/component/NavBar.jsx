@@ -1,6 +1,10 @@
-import {Container, Nav, Navbar} from 'react-bootstrap';
+import {Container, Nav, Navbar, NavDropdown} from 'react-bootstrap';
+import getCurrentProfile from '../utils/current-profile';
+import {Roles} from '../constants';
 
 export default function NavBar() {
+  const {role} = getCurrentProfile();
+
   return (
     <Navbar expand="lg" className="bg-primary">
       <Container>
@@ -22,6 +26,12 @@ export default function NavBar() {
             <Nav.Link href="/resources" className="text-white">
               Resources
             </Nav.Link>
+          </Nav>
+          <Nav>
+            <NavDropdown title="Profile" id="profile-dropdown" align="end" className="text-white">
+              {role !== Roles.ADMIN && <NavDropdown.Item href="/profile">View Profile</NavDropdown.Item>}
+              <NavDropdown.Item href="/login">Logout</NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
