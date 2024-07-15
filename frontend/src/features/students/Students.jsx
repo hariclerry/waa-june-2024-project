@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Col, Container, Row, Spinner} from 'react-bootstrap';
 import {useNavigate} from 'react-router';
-import {State} from '../../core/constants';
+import {Roles, State} from '../../core/constants';
 import ErrorDialog from '../../core/component/dialogs/ErrorDialog';
 import apiClient from '../../core/setup/axios';
 import NavBar from '../../core/component/NavBar';
 import StudentCard from './student-card/student-card';
+import getCurrentProfile from '../../core/utils/current-profile';
 
 const Students = () => {
   const [studentsData, setStudentsData] = useState({
@@ -24,12 +25,25 @@ const Students = () => {
   });
 
   const navigate = useNavigate();
+  const profile = getCurrentProfile();
+
+  if (profile === null || profile === undefined) {
+    navigate('/login');
+  }
 
   const fetchStudents = async (pageNumber = 0) => {
     setStudentsState({...studentsState, status: State.LOADING});
 
+    var studentsUrl;
+
     try {
-      const response = await apiClient.get(`/students?page=${pageNumber}`);
+      if (profile.role === Roles.ADMIN) {
+        studentsUrl = `/admins/students?page=${pageNumber}`;
+      } else {
+        studentsUrl = `/students?page=${pageNumber}`;
+      }
+
+      const response = await apiClient.get(studentsUrl);
       setStudentsData(response.data);
       setStudentsState({...studentsState, status: State.SUCCEEDED});
     } catch (err) {
