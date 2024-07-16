@@ -16,6 +16,7 @@ function EventDetails() {
         const data = await getEventApi(params.id);
         setEvent(data);
     }
+    
     return (
         <>
         {event && 

@@ -64,9 +64,11 @@ public class EventController {
         return new ResponseEntity<>(eventService.getAttendeesForEvent(eventId), HttpStatus.OK);
     }
 
-    @GetMapping("/students/events/{studentId}/events")
-    public ResponseEntity<List<StudentEventResponseDTO> >getEventsByStudentId(@PathVariable Long studentId) {
-        return new ResponseEntity<>(eventService.getEventsByStudentId(studentId), HttpStatus.OK);
+    @GetMapping("/students/events")
+    public ResponseEntity<List<StudentEventResponseDTO> >getEventsByStudentId(@AuthenticationPrincipal UserDetails
+                                                                                           userDetails) {
+        var currentUser = userService.findByUsername(userDetails.getUsername());
+        return new ResponseEntity<>(eventService.getEventsByStudentId(currentUser.getId()), HttpStatus.OK);
     }
     @PostMapping("/students/events/{eventId}/reservation")
     public ResponseEntity<EventRequestDto> addEventReservation(@PathVariable Long eventId,

@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {Container, Button} from 'react-bootstrap';
 import EventList from '../../core/component/events/EventList';
-import { deleteEventApi, getAllEventsApi, updateEventApi } from '../../service/eventsAPI';
+import { deleteEventApi, getAllEventsApi, getStudentEventsApi, makeEventReservationApi, removeEventReservationApi, updateEventApi } from '../../service/eventsAPI';
 import CreateEvent from '../../core/component/events/CreateEvent';
 import { createEventApi } from '../../service/eventsAPI';
+import getCurrentProfile from '../../core/utils/current-profile';
+import { Roles } from '../../core/constants';
+import { Link } from 'react-router-dom';
+import NavBar from '../../core/component/NavBar';
 
 function Events() {
     const initialState = {
@@ -17,7 +21,8 @@ function Events() {
     const [showModal, setShowModal] = useState(false);
     const [isEditing, setisEditing] = useState(false);
     const [validated, setValidated] = useState(false);
-    const [addEvent, setAddEvent] = useState(initialState)
+    const [addEvent, setAddEvent] = useState(initialState);
+    const profile = getCurrentProfile();
 
     const handleOnChange = (e) => {
         setAddEvent({...addEvent, [e.target.name]: e.target.value})
@@ -84,11 +89,33 @@ function Events() {
         setAddEvent(initialState);
     }
 
+    const handleMakeEventReservation = async (id) => {
+        await makeEventReservationApi(id);
+        getEvents();
+
+    }
+
+    const handleRemoveEventReservation = async (id) => {
+        await removeEventReservationApi(id);
+        getEvents();
+
+    }
+
     return (
+        <>
+          <NavBar />
         <Container className='mx-auto my-5'>
+            {profile.role === Roles.ADMIN && 
              <Button variant="primary" onClick={(e)=>handleShowModal(e, 'Create')}>
             Add Event
             </Button>
+            }
+
+            {profile.role === Roles.STUDENT && 
+             <Link to="/my-events" >
+              See My Events
+            </Link>
+            }
             <EventList events={events} 
             onDelete={handleDelete} 
             onSubmit={handleSubmit} 
@@ -98,6 +125,8 @@ function Events() {
             state={addEvent}
             validated={validated} 
             onChange={handleOnChange}
+            onHandleMakeEventReservation={handleMakeEventReservation}
+            onHandleRemoveEventReservation={handleRemoveEventReservation}
             />
             <CreateEvent 
             state={addEvent}
@@ -110,6 +139,7 @@ function Events() {
             isEditing={isEditing}
             />
       </Container>
+      </>
     )
 }
 
