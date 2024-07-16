@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Col, Container, Row, Spinner} from 'react-bootstrap';
+import {Button, Col, Container, Form, Row, Spinner} from 'react-bootstrap';
 import {useNavigate} from 'react-router';
 import {Roles, State} from '../../core/constants';
 import ErrorDialog from '../../core/component/dialogs/ErrorDialog';
@@ -7,6 +7,7 @@ import apiClient from '../../core/setup/axios';
 import NavBar from '../../core/component/NavBar';
 import StudentCard from './student-card/student-card';
 import getCurrentProfile from '../../core/utils/current-profile';
+import debounce from 'lodash/debounce';
 
 const Students = () => {
   const [studentsData, setStudentsData] = useState({
@@ -24,6 +25,7 @@ const Students = () => {
     error: null
   });
 
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
   const profile = getCurrentProfile();
 
@@ -31,16 +33,19 @@ const Students = () => {
     navigate('/login');
   }
 
-  const fetchStudents = async (pageNumber = 0) => {
+  // Debounced fetchStudents function
+  const fetchStudentsDebounced = debounce(fetchStudents, 700);
+
+  async function fetchStudents(pageNumber = 0, query = '') {
     setStudentsState({...studentsState, status: State.LOADING});
 
     var studentsUrl;
 
     try {
       if (profile.role === Roles.ADMIN) {
-        studentsUrl = `/admins/students?page=${pageNumber}`;
+        studentsUrl = `/admins/students?page=${pageNumber}&search=${query}`;
       } else {
-        studentsUrl = `/students?page=${pageNumber}`;
+        studentsUrl = `/students?page=${pageNumber}&search=${query}`;
       }
 
       const response = await apiClient.get(studentsUrl);
@@ -56,14 +61,21 @@ const Students = () => {
         });
       }
     }
-  };
+  }
 
   useEffect(() => {
     fetchStudents();
   }, []);
 
   const handlePageChange = pageNumber => {
-    fetchStudents(pageNumber);
+    fetchStudents(pageNumber, searchQuery);
+  };
+
+  const handleSearch = event => {
+    const {value} = event.target;
+    setSearchQuery(value);
+    // Call the debounced function
+    fetchStudentsDebounced(0, value); // Reset to first page when searching
   };
 
   return (
@@ -73,6 +85,16 @@ const Students = () => {
         <Row className="justify-content-center min-vh-100 m-4">
           <Col md="8">
             <h2 className="text-center">Students</h2>
+            <div className="mb-3">
+              <Form.Group controlId="search">
+                <Form.Control
+                  type="text"
+                  placeholder="Search students..."
+                  value={searchQuery}
+                  onChange={handleSearch}
+                />
+              </Form.Group>
+            </div>
             {studentsState.status === State.LOADING ? (
               <Spinner animation="border" role="status" className="d-block mx-auto">
                 <span className="visually-hidden">Loading...</span>
