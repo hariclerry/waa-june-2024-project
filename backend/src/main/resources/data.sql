@@ -14,7 +14,9 @@ VALUES ("Persoanl Health", "Importantce of personal health");
 -- temp
 insert into users(id, username, password, first_name, last_name, email, birth_date, gender_type, account_status,
                   role_type, user_type)
-values (1, "student1", "{noop}123", "Student", "1", "student1@gmail.com", "2008-01-28", "MALE", "ACTIVE", "STUDENT", "STUDENT");
+values (1, "student1", "{noop}123", "Allen", "Walker", "allen.walker@gmail.com", "2008-01-28", "MALE", "ACTIVE",
+        "STUDENT",
+        "STUDENT");
 
 
 -- temp
