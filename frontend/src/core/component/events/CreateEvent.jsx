@@ -1,12 +1,12 @@
 import React from 'react';
 import {Button, Modal,Form, Row } from 'react-bootstrap';
 
-function CreateEvent({show, onClose, validated, onSubmit, onChange, state}) {
+function CreateEvent({show, onClose, validated, onSubmit, onChange, state, isEditing}) {
   return (
     <>
       <Modal show={show} onHide={() => onClose(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Event</Modal.Title>
+          <Modal.Title>{ isEditing ? `Edit Event` : `Add Event`}</Modal.Title>
         </Modal.Header>
         <Form noValidate validated={validated}>
         <Row className="mx-auto my-4">

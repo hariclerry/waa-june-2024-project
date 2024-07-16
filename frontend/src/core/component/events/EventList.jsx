@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router';
 import {Table, Button} from 'react-bootstrap';
 import { MdDeleteForever } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
-import EditEvent from './EditEvent';
+// import EditEvent from './EditEvent';
+import CreateEvent from './CreateEvent';
 
-function EventList({events, onDelete, onShow, show , onClose, state, validated, onChange, onSubmit}) {
+function EventList({events, onDelete, onShowModal, show , onClose, state, validated, onChange, onSubmit}) {
   const navigate = useNavigate();
 
   const onShowDetails = (id) => {
@@ -29,14 +30,14 @@ function EventList({events, onDelete, onShow, show , onClose, state, validated, 
                 <tr key={event.id}>
                 <td>{event.id}</td>
                 <td>{event.name}</td>
-                <td><FaRegEdit color='green' onClick={() => onShow(event)}/></td>
+                <td><FaRegEdit color='green' onClick={() => onShowModal(event, 'Edit')}/></td>
                 <td><MdDeleteForever color='red' size={20} onClick={() => onDelete(event.id)}/></td>
                 <td><Button variant="link" onClick={() => onShowDetails(event.id)}>Details</Button></td>
                 </tr>
             )}
         </tbody>
       </Table>
-     <EditEvent onClose={onClose} show={show} state={state} validated={validated} 
+     <CreateEvent onClose={onClose} show={show} state={state} validated={validated} 
             onChange={onChange} onSubmit={onSubmit}/> 
       </>
     )

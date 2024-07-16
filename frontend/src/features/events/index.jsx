@@ -14,8 +14,7 @@ function Events() {
         
     }
     const [events, setEvents] = useState([]);
-    const [show, setShow] = useState(false);
-    const [showEditModal, setShowEditModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const [isEditing, setisEditing] = useState(false);
     const [validated, setValidated] = useState(false);
     const [addEvent, setAddEvent] = useState(initialState)
@@ -43,14 +42,14 @@ function Events() {
     
         setValidated(true);
         if(isEditing) {
-           const data = await updateEventApi(addEvent);
+           await updateEventApi(addEvent);
            getEvents();
            setisEditing(false);
-           setShowEditModal(false)
+           setShowModal(false)
         } else {
             await createEventApi(addEvent);
             getEvents();
-            setShow(false);
+            setShowModal(false);
         }
      
         setAddEvent(initialState);
@@ -61,8 +60,9 @@ function Events() {
         await deleteEventApi(id)
         getEvents();
     }
-    const handleShowModal = async (data) => {
-            setShowEditModal(true)
+    const handleShowModal = async (data, mode) => {
+        if(mode === 'Edit') {
+            setShowModal(true);
             setisEditing(true)
             setAddEvent({
                 id: data.id,
@@ -71,19 +71,30 @@ function Events() {
                 eventTime: data.eventTime,
                 description: data.description,
             })
+        } else {
+            setShowModal(true);
+            setisEditing(false);
+        }
+           
+    }
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setisEditing(false);
+        setAddEvent(initialState);
     }
 
     return (
         <Container className='mx-auto my-5'>
-             <Button variant="primary" onClick={()=>setShow(true)}>
+             <Button variant="primary" onClick={(e)=>handleShowModal(e, 'Create')}>
             Add Event
             </Button>
             <EventList events={events} 
             onDelete={handleDelete} 
             onSubmit={handleSubmit} 
-            onShow={handleShowModal}
-            onClose={() => setShowEditModal(false)}
-            show={showEditModal}
+            onShowModal={handleShowModal}
+            onClose={handleCloseModal}
+            show={showModal}
             state={addEvent}
             validated={validated} 
             onChange={handleOnChange}
@@ -91,10 +102,13 @@ function Events() {
             <CreateEvent 
             state={addEvent}
             onChange={handleOnChange}
-            onClose={setShow} 
-            show={show} 
+            onClose={setShowModal} 
+            show={showModal} 
+            onShowModal={handleShowModal}
             validated={validated} 
-            onSubmit={handleSubmit}/>
+            onSubmit={handleSubmit}
+            isEditing={isEditing}
+            />
       </Container>
     )
 }
