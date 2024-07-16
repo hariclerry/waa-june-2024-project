@@ -8,6 +8,7 @@ export default function StudentDashboard() {
         <li>
           <Link to="/students">Student</Link>
         </li>
+        <li><Link to="/events">Events</Link></li>
       </ul>
     </>
   );
