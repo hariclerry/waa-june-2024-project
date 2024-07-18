@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import StudentEvent from './StudentEvent';
-import getCurrentProfile from '../../utils/current-profile';
-import { getStudentEventsApi } from '../../../service/eventsAPI';
-import { Roles } from '../../constants';
+import { getStudentEventsApi } from '../../service/eventsAPI';
+import getCurrentProfile from '../../core/utils/current-profile';
+import { Roles } from '../../core/constants';
 import { Row, Container } from 'react-bootstrap';
 
 function UserEvents() {

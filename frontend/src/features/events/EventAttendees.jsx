@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useParams } from "react-router";
-import { getEventsAttendeesApi } from '../../../service/eventsAPI';
+import { getEventsAttendeesApi } from '../../service/eventsAPI';
 import {Table, Row, Container } from 'react-bootstrap';
 
 function EventAttendees() {
