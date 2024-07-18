@@ -3,7 +3,7 @@ import StudentEvent from './StudentEvent';
 import getCurrentProfile from '../../utils/current-profile';
 import { getStudentEventsApi } from '../../../service/eventsAPI';
 import { Roles } from '../../constants';
-import { Row, Stack } from 'react-bootstrap';
+import { Row, Container } from 'react-bootstrap';
 import NavBar from '../NavBar';
 
 function UserEvents() {
@@ -24,6 +24,7 @@ function UserEvents() {
     return (
         <>
          <NavBar />
+         <Container className='mx-auto my-5'>
          <h3 className='d-flex justify-content-center p-5'> My Events</h3>
        { profile.role === Roles.STUDENT && (
             <Row className="justify-content-start">
@@ -39,6 +40,7 @@ function UserEvents() {
               />)})
             }
             </Row>)}
+            </Container>
              </>
     )
 }

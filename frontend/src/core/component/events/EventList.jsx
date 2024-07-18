@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import CreateEvent from './CreateEvent';
 import { Roles } from '../../constants';
 import StudentEvent from './StudentEvent';
-import EventTable from './EventTable';
+import EventCard from './EventCard';
 import getCurrentProfile from '../../utils/current-profile';
 import { Row } from 'react-bootstrap';
 
@@ -33,7 +33,6 @@ function EventList({
     if(events && events.length === 0) return <Row className='d-flex justify-content-center p-5'>No Events Available</Row>
     return (
       <>
-       <h3 className='d-flex justify-content-center'>Events</h3>
        {profile.role === Roles.STUDENT ? (
          <Row className="justify-content-start">
          { 
@@ -52,9 +51,16 @@ function EventList({
         
         ) : (
           <>
-          <EventTable events={events} onDelete={onDelete} onShowModal={onShowModal} onShowDetails={onShowDetails} onShowAttendees={onShowAttendees}/>
+            <Row className="justify-content-start">
+          {
+            events && events.map(event => (
+              <EventCard key={event.id} event={event} onDelete={onDelete} onShowModal={onShowModal} onShowDetails={onShowDetails} onShowAttendees={onShowAttendees}/>
+            ))
+          }
+          
           <CreateEvent onClose={onClose} show={show} state={state} validated={validated} 
           onChange={onChange} onSubmit={onSubmit}/> 
+          </Row>
           </>
         )}
       

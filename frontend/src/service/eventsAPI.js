@@ -1,7 +1,8 @@
 import apiClient from "../core/setup/axios";
 
-export const getAllEventsApi = async () => {
-  const response = await apiClient.get("/events");
+export const getAllEventsApi = async (keyword) => {
+  // const response = await apiClient.get("/events");
+  const response = await apiClient.get(`/events/search?name=${keyword}`);
   return response.data;
 };
 
@@ -45,8 +46,8 @@ export const createEventApi = async (data) => {
     return response.data;
   };
 
-  //add query params
-  export const searchEventsApi = async (keyword) => {
-    const response = await apiClient.get(`/events/search/`);
-    return response.data;
-  };
+  // //add query params
+  // export const searchEventsApi = async (keyword) => {
+  //   const response = await apiClient.get(`/events/search?name=${keyword}`);
+  //   return response.data;
+  // };

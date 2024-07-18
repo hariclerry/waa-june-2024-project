@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import { useParams, useNavigate } from "react-router";
+import { useParams } from "react-router";
 import { getEventsAttendeesApi } from '../../../service/eventsAPI';
-import {Table, Row } from 'react-bootstrap';
+import {Table, Row, Container } from 'react-bootstrap';
 import NavBar from '../NavBar';
 
 function EventAttendees() {
     const params = useParams();
-    const navigate = useNavigate();
     const [attendees, setAttendees] = useState();
 
     useEffect( () => {
@@ -22,6 +21,7 @@ function EventAttendees() {
     return (
         <>
         <NavBar />
+        <Container className='mx-auto my-5'>
         <Row className="mx-auto my-0">
         <h3 className='d-flex justify-content-center p-5'> Attendees for Events</h3>
         <Table striped bordered hover>
@@ -45,6 +45,7 @@ function EventAttendees() {
         </tbody>
       </Table> 
       </Row>
+      </Container>
       </>
     )
 }

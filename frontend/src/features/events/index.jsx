@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import {Container, Button} from 'react-bootstrap';
+import {Container, Button, Form} from 'react-bootstrap';
 import EventList from '../../core/component/events/EventList';
-import { deleteEventApi, getAllEventsApi, getStudentEventsApi, makeEventReservationApi, removeEventReservationApi, updateEventApi } from '../../service/eventsAPI';
+import { deleteEventApi, getAllEventsApi, makeEventReservationApi, removeEventReservationApi, updateEventApi } from '../../service/eventsAPI';
 import CreateEvent from '../../core/component/events/CreateEvent';
 import { createEventApi } from '../../service/eventsAPI';
 import getCurrentProfile from '../../core/utils/current-profile';
 import { Roles } from '../../core/constants';
 import { Link } from 'react-router-dom';
 import NavBar from '../../core/component/NavBar';
+import debounce from 'lodash/debounce';
 
 function Events() {
     const initialState = {
         name: "",
         eventDate: "",
         eventTime: "",
+        location: "",
         description: "",
         
     }
@@ -22,6 +24,7 @@ function Events() {
     const [isEditing, setisEditing] = useState(false);
     const [validated, setValidated] = useState(false);
     const [addEvent, setAddEvent] = useState(initialState);
+    const [searchQuery, setSearchQuery] = useState('');
     const profile = getCurrentProfile();
 
     const handleOnChange = (e) => {
@@ -33,10 +36,19 @@ function Events() {
     }, [])
 
     const getEvents = async () => {
-        const data = await getAllEventsApi();
-        //TODO: Pagination
+        const data = await getAllEventsApi(searchQuery);
+
         setEvents(data.content);
     }
+
+    const fetchEventsDebounced = debounce(getEvents, 700);
+        
+    const handleSearch = event => {
+        const {value} = event.target;
+        setSearchQuery(value);
+        // Call the debounced function
+        fetchEventsDebounced(0, value); // Reset to first page when searching
+    };
 
     const handleSubmit = async (event) => {
         const form = event.currentTarget;
@@ -74,6 +86,7 @@ function Events() {
                 name: data.name,
                 eventDate: data.eventDate,
                 eventTime: data.eventTime,
+                location: data.location,
                 description: data.description,
             })
         } else {
@@ -100,7 +113,6 @@ function Events() {
         getEvents();
 
     }
-
     return (
         <>
           <NavBar />
@@ -116,6 +128,18 @@ function Events() {
               See My Events
             </Link>
             }
+
+            <h3 className='d-flex justify-content-center m-4'>Events</h3>
+            <div className="mb-3">
+              <Form.Group controlId="search">
+                <Form.Control
+                  type="text"
+                  placeholder="Search Events..."
+                  value={searchQuery}
+                  onChange={handleSearch}
+                />
+              </Form.Group>
+            </div>
             <EventList events={events} 
             onDelete={handleDelete} 
             onSubmit={handleSubmit} 
