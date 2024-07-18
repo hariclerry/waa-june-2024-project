@@ -15,5 +15,8 @@ export default function Dashboard() {
     }
   }, [profile, navigate]);
 
-  return <>{profile && profile.role === Roles.ADMIN ? <AdminDashboard /> : <StudentDashboard />}</>;
+  return <>
+   <h5 className='d-flex justify-content-end m-4'>Welcome {profile.user}</h5>
+  {profile && profile.role === Roles.ADMIN ? <AdminDashboard /> : <StudentDashboard />}
+  </>;
 }

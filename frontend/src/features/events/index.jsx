@@ -7,7 +7,6 @@ import { createEventApi } from '../../service/eventsAPI';
 import getCurrentProfile from '../../core/utils/current-profile';
 import { Roles } from '../../core/constants';
 import { Link } from 'react-router-dom';
-import NavBar from '../../core/component/NavBar';
 import debounce from 'lodash/debounce';
 
 function Events() {
@@ -115,7 +114,6 @@ function Events() {
     }
     return (
         <>
-          <NavBar />
         <Container className='mx-auto my-5'>
             {profile.role === Roles.ADMIN && 
              <Button variant="primary" onClick={(e)=>handleShowModal(e, 'Create')}>

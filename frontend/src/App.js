@@ -15,9 +15,12 @@ import Discussion from './features/discussion-comment/Discussion';
 import DiscussionCreate from './features/discussion-comment/DiscussionCreate';
 import DiscussionEdit from './features/discussion-comment/DiscussionEdit';
 import DiscussionComments from './features/discussion-comment/DiscussionComments';
+import NavBar from './core/component/NavBar';
 
 function App() {
   return (
+    <>
+    <NavBar />
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/login" element={<Login />} />
@@ -36,6 +39,7 @@ function App() {
       <Route path="/discussion-edit/:id" element={<DiscussionEdit />} />
       <Route path="/discussion-comments/:id" element={<DiscussionComments />} />
     </Routes>
+    </>
   );
 }
 

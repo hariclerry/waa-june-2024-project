@@ -1,4 +1,3 @@
-import NavBar from '../../core/component/NavBar';
 import {fa8, faCalendarAlt, faComment, faUserGraduate} from '@fortawesome/free-solid-svg-icons';
 import {Container, Row} from 'react-bootstrap';
 import DashboardCard from '../dashboard-card/dashboard-card';
@@ -12,7 +11,6 @@ export default function StudentDashboard() {
 
   return (
     <>
-      <NavBar />
       <Container className="mt-5">
         <Row>
           {options.map(opt => (

@@ -8,7 +8,27 @@ export default function NavBar() {
   return (
     <Navbar expand="lg" className="bg-primary">
       <Container>
-        <Navbar.Brand href="/" className="text-white">
+        {!profile ? (
+          <>
+           <Navbar.Brand href="/login" className="text-white">
+           University Connect
+         </Navbar.Brand>
+           <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="/login" className="text-white">
+              Login
+            </Nav.Link>
+            <Nav.Link href="/register" className="text-white">
+              Register
+            </Nav.Link>
+            </Nav>
+            </Navbar.Collapse>
+          
+          </>
+          
+         ):(
+          <>
+           <Navbar.Brand href="/" className="text-white">
           University Connect
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -43,6 +63,9 @@ export default function NavBar() {
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
+        </>
+        )
+}
       </Container>
     </Navbar>
   );
