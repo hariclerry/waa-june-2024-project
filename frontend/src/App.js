@@ -16,6 +16,7 @@ import DiscussionCreate from './features/discussion-comment/DiscussionCreate';
 import DiscussionEdit from './features/discussion-comment/DiscussionEdit';
 import DiscussionComments from './features/discussion-comment/DiscussionComments';
 import NavBar from './core/component/NavBar';
+import AcademicResource from './features/academicResources/AcademicResource';
 
 function App() {
 
@@ -39,7 +40,7 @@ function App() {
       <Route path="/student/:username" element={<StudentDetail />} />
       <Route path="/profile/update" element={<UpdateStudentDetail />} />
       <Route path="/profile" element={<StudentDetail />} />
-
+      <Route path="/academic-resouces" element={<AcademicResource />} />
       <Route path="/discussions" element={<Discussion />} />
       <Route path="/discussion-create" element={<DiscussionCreate />} />
       <Route path="/discussion-edit/:id" element={<DiscussionEdit />} />

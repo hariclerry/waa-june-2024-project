@@ -43,7 +43,7 @@ export default function NavBar({onLogout}) {
             <Nav.Link href="/events" className="text-white">
               Events
             </Nav.Link>
-            <Nav.Link href="/resources" className="text-white">
+            <Nav.Link href="/academic-resouces" className="text-white">
               Resources
             </Nav.Link>
             <Nav.Link href="/discussions" className="text-white">
