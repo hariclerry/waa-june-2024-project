@@ -45,9 +45,3 @@ export const createEventApi = async (data) => {
     const response = await apiClient.get(`/students/events`);
     return response.data;
   };
-
-  // //add query params
-  // export const searchEventsApi = async (keyword) => {
-  //   const response = await apiClient.get(`/events/search?name=${keyword}`);
-  //   return response.data;
-  // };
