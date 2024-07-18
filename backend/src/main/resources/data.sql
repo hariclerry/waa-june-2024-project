@@ -50,14 +50,11 @@ values (1, "Social Party");
 INSERT INTO events (name, location, description, event_date, event_time)
 VALUES
 ('Harriet"s Birthday', 'Serena Hotel', 'Come have fun and celebrate. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', '2024-08-08', '09:00:00'),
 ('Book Fair', 'Fairfield', 'Book fair with stalls from various publishers and authors.', '2024-11-12', '14:00:00'),
-('Fitness Bootcamp', 'Townsend Gym', 'Outdoor fitness bootcamp for all levels. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', '2025-03-10', '07:00:00'),
+('Fitness Bootcamp', 'Townsend Gym', 'Outdoor fitness bootcamp for all levels. Lorem ipsum dolor sit amet', '2025-03-10', '07:00:00'),
 ('Coding Workshop', 'Block Hotel', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2025-04-22', '11:00:00');
+Ut enim ad minim veniam.', '2025-04-22', '11:00:00');
 
 -- temp
 INSERT INTO courses (name, code, major_id) VALUES
