@@ -2,7 +2,7 @@ import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import getCurrentProfile from '../utils/current-profile';
 import { Roles } from '../constants';
 
-export default function NavBar() {
+export default function NavBar({onLogout}) {
   const profile = getCurrentProfile();
 
   return (
@@ -59,7 +59,7 @@ export default function NavBar() {
               {profile && profile.role !== Roles.ADMIN && (
                 <NavDropdown.Item href="/profile">View Profile</NavDropdown.Item>
               )}
-              <NavDropdown.Item href="/login">Logout</NavDropdown.Item>
+              <NavDropdown.Item href="/login" onClick={onLogout}>Logout</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

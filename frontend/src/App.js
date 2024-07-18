@@ -1,6 +1,6 @@
 import './App.css';
 import Dashboard from './features/dashboard/Dashboard';
-import {Route, Routes} from 'react-router';
+import {Route, Routes, useNavigate} from 'react-router';
 import Login from './features/authentication/login/Login';
 import Register from './features/authentication/register/Register';
 import Students from './features/students/Students';
@@ -18,9 +18,15 @@ import DiscussionComments from './features/discussion-comment/DiscussionComments
 import NavBar from './core/component/NavBar';
 
 function App() {
+
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.clear();
+    navigate('/login');
+  }
   return (
     <>
-    <NavBar />
+    <NavBar onLogout={logout}/>
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/login" element={<Login />} />
